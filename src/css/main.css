@@ -1,0 +1,93 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 60px auto;
+}
+
+nav {
+    background-color: black;
+    color: white;
+}
+
+.logo {
+    margin: 30px;
+}
+
+.btn {
+    color: inherit;
+    padding: 10px 20px;
+    border: 1px solid white;
+    border-radius: 3px;
+    text-decoration: none;
+    line-height: 40px;
+    transition: all 0.5s;
+}
+
+.nav-bar {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.nav-bar select {
+    color: inherit;
+    background-color: black;
+    line-height: 40px;
+    height: 40px;
+    border: 1px solid white;
+    border-radius: 3px;
+    transition: all 0.5s;
+    outline-color: transparent;
+}
+
+.nav-bar select:hover, .btn:hover {
+    background-color: #444;
+}
+
+.nav-bar select:active, .btn:active {
+    background-color: #999;
+    color: #000;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto; 
+    height: 100%;
+    width: 100%;
+    max-width: 1080px;
+}
+
+main {
+    position: relative;
+}
+
+
+.container {
+    position:absolute;
+    height:auto;
+    bottom: 0;
+    top:0;
+    left:0;
+    right:0;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.squares {
+    border: 1px solid black;
+}
+
+.squares div {
+    height: 28px;
+    width: 28px;
+    border: 1px solid black;
+    float: left;
+}
+
