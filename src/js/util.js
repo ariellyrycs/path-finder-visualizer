@@ -11,9 +11,7 @@ let Util = (() => {
             }, wait);
         };
     };
-
-
-
+    
     return {
         debounce
     };
