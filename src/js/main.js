@@ -4,7 +4,7 @@
 (() => {
     let squares = document.querySelector('.squares'),
         containerElem = document.querySelector('.container'),
-        squareSize = 30;
+        squareSize = config.squareSize;
 
     let render = () => {
         let containerRect = containerElem.getBoundingClientRect();

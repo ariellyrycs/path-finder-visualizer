@@ -37,8 +37,10 @@
 
     reset.addEventListener('click', () => {
         squares.querySelectorAll('[data-color-type]').forEach(div => {
-            delete div.dataset.colorType
+            delete div.dataset.colorType;
         });
+        startElement = null;
+        endElement = null;
     });
 
     start.addEventListener('click', () => {

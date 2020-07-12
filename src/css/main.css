@@ -97,6 +97,10 @@ main {
     float: left;
 }
 
+.squares > div {
+    transition: background-color 0.2s linear;
+}
+
 .squares > [data-color-type="0"] {
     background-color: red;
 }
@@ -107,5 +111,13 @@ main {
 
 .squares > [data-color-type="2"] {
     background-color: black;
+}
+
+.squares > [data-color-type="3"] {
+    background-color: aquamarine;
+}
+
+.squares > [data-color-type="4"] {
+    background-color: blue;
 }
 
