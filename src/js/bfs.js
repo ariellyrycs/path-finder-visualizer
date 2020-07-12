@@ -25,11 +25,7 @@ let bfs = (() => {
         return new Promise(res => setTimeout(res, 10));
     };
 
-    let search = async (start, end) => {
-        let containerWidth = parseInt(container.clientWidth) / config.squareSize;
-        let startIndex = getSquareIndex(start);
-        let endIndex = getSquareIndex(end);
-            directions = [-containerWidth, 1, containerWidth, -1];
+    let search = async (directions, startIndex, endIndex, containerWidth) => {
         let levels = [[new Node(startIndex, '0')]],
             included = new Set([startIndex]),
             levelIndex = 0;
@@ -59,17 +55,22 @@ let bfs = (() => {
     };
 
     let drawPath = async (levels) => {
+        if(levels.length === 0) return;
         let lastLevel = levels[levels.length - 1];
         let route = lastLevel[lastLevel.length - 1].route.split(',');
         for(let i = 1; i < route.length - 1; i += 1) {
             await delay();
             squares[levels[i][route[i]].index].dataset.colorType = 4;
         }
-
     };
 
-    let start = async (s, e) => {
-        let levels = await search(s, e);
+    let start = async (start, end) => {
+        let startIndex = getSquareIndex(start);
+        let containerWidth = parseInt(container.clientWidth) / config.squareSize;
+        let endIndex = getSquareIndex(end),
+            directions = [-containerWidth, 1, containerWidth, -1];
+            
+        let levels = await search(directions, startIndex, endIndex, containerWidth);
         drawPath(levels);
     };
 

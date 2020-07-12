@@ -21,7 +21,6 @@
         }
     });
 
-
     squares.addEventListener('mouseup', (e) => {
         if(typeof e.target.dataset.colorType === 'undefined' && currentTypePointer !== 3) {
             if(currentTypePointer === 0) {
@@ -60,19 +59,9 @@
                 bfs.start(startElement, endElement);
             break;
             case 'Depth':
+                dfs.start(startElement, endElement);
             break;
             default:
         }
     });
-
-    
-    
-
-
-
-
-
-
-
-
 })();
