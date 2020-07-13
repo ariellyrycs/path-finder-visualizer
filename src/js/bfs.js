@@ -1,50 +1,31 @@
+let bfs = ((matrixOptions, {delay, geneareFourDirectionalCoordinates}) => {
 
-
-let bfs = (() => {
-    let container = document.querySelector('.squares'),
-        squares = Array.from(container.querySelectorAll('div'));
-
-    function Node(index, indexRoute) {
-        this.index = index;
+    function LevelNode(coords, indexRoute) {
+        this.coords = coords;
         this.route = indexRoute;
     }
 
-    let getSquareIndex = (elem) => {
-        return squares.indexOf(elem);
-    };
-
-    let inRange = (currentIndex, nextIndex, containerWidth) => {
-        if(Math.floor(nextIndex / containerWidth) !== Math.floor(currentIndex / containerWidth) &&
-            Math.abs(nextIndex - currentIndex) === 1) {
-            return false;
-        }
-        return 0 <= nextIndex && nextIndex < squares.length;
-    };
-
-    let delay = () => {
-        return new Promise(res => setTimeout(res, 10));
-    };
-
-    let search = async (directions, startIndex, endIndex, containerWidth) => {
-        let levels = [[new Node(startIndex, '0')]],
-            included = new Set([startIndex]),
+    let search = async (startCoords, endCoords) => {
+        let levels = [[new LevelNode(startCoords, '0')]],
+            included = new Set([startCoords.toString()]),
             levelIndex = 0;
         while(levelIndex < levels.length) {
             let currentLevel = levels[levelIndex];
             let newLevel = [];
             for(let i = 0; i < currentLevel.length; i += 1) {
-                let {index, route} = currentLevel[i];
-                for(let directionIndex = 0; directionIndex < directions.length; directionIndex += 1) {
-                    let nextIndex = index + directions[directionIndex];
-                    if(inRange(index, nextIndex, containerWidth) && !included.has(nextIndex)) {
-                        newLevel.push(new Node(nextIndex, route + ',' + newLevel.length));
+                let {coords, route} = currentLevel[i];
+                let possibleCoords = geneareFourDirectionalCoordinates(coords);
+                for(let d = 0; d < possibleCoords.length; d += 1) {
+                    let nextCoords = possibleCoords[d];
+                    if(!included.has(nextCoords.toString())) {
+                        newLevel.push(new LevelNode(nextCoords, route + ',' + newLevel.length));
                         await delay();
-                        if(nextIndex === endIndex) {
+                        if(nextCoords.toString() === endCoords.toString()) {
                             levels.push(newLevel)
                             return levels;
                         }
-                        squares[nextIndex].dataset.colorType = 3;
-                        included.add(nextIndex);
+                        matrixOptions.matrix[nextCoords[0]][nextCoords[1]].dataset.colorType = 3;
+                        included.add(nextCoords.toString());
                     }
                 }
             }
@@ -60,21 +41,17 @@ let bfs = (() => {
         let route = lastLevel[lastLevel.length - 1].route.split(',');
         for(let i = 1; i < route.length - 1; i += 1) {
             await delay();
-            squares[levels[i][route[i]].index].dataset.colorType = 4;
+            let [y, x] = levels[i][route[i]].coords;
+            matrixOptions.matrix[y][x].dataset.colorType = 4;
         }
     };
 
     let start = async (start, end) => {
-        let startIndex = getSquareIndex(start);
-        let containerWidth = parseInt(container.clientWidth) / config.squareSize;
-        let endIndex = getSquareIndex(end),
-            directions = [-containerWidth, 1, containerWidth, -1];
-            
-        let levels = await search(directions, startIndex, endIndex, containerWidth);
-        drawPath(levels);
+        let levels = await search(start, end);
+        await drawPath(levels);
     };
 
     return {
         start
     };
-})();
+})(matrixOptions, Util);

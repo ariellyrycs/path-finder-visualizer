@@ -44,23 +44,29 @@
 
     start.addEventListener('click', () => {
         if(startElement === null || endElement === null) return;
+        let sDataSet = startElement.dataset,
+            eDataSet = endElement.dataset;
+        let sX = +sDataSet.x;
+        let sY = +sDataSet.y;
+        let eX = +eDataSet.x;
+        let eY = +eDataSet.y;
         switch(currentState) {
             case 'A':
-            break;
+                break;
             case 'Gready':
-            break;
+                break;
             case 'Swarn':
-            break;
+                break;
             case 'Convergent':
-            break;
+                break;
             case 'Bidirectional':
-            break;
+                break;
             case 'Breadth':
-                bfs.start(startElement, endElement);
-            break;
+                bfs.start([sY, sX], [eY, eX]);
+                break;
             case 'Depth':
-                dfs.start(startElement, endElement);
-            break;
+                dfs.start([sY, sX], [eY, eX]);
+                break;
             default:
         }
     });
