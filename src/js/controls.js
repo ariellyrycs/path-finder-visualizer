@@ -8,7 +8,8 @@
 
     let currentTypePointer = 0;
     let startElement = null;
-    let endElement = null;
+    let endElement = null,
+        wallCell = [];
 
 
     algoElem.addEventListener('change', e => {
@@ -31,6 +32,10 @@
                 endElement = e.target;
             }
             e.target.dataset.colorType = currentTypePointer;
+            if(currentTypePointer === 2) {
+                let {x, y} = e.target.dataset;
+                wallCell.push([y, x]);
+            }
         }
     });
 
@@ -40,6 +45,7 @@
         });
         startElement = null;
         endElement = null;
+        wallCell = [];
     });
 
     start.addEventListener('click', () => {
@@ -52,6 +58,7 @@
         let eY = +eDataSet.y;
         switch(currentState) {
             case 'A':
+                aStar.start([sY, sX], [eY, eX], wallCell);
                 break;
             case 'Gready':
                 break;
@@ -62,10 +69,10 @@
             case 'Bidirectional':
                 break;
             case 'Breadth':
-                bfs.start([sY, sX], [eY, eX]);
+                bfs.start([sY, sX], [eY, eX], wallCell);
                 break;
             case 'Depth':
-                dfs.start([sY, sX], [eY, eX]);
+                dfs.start([sY, sX], [eY, eX], wallCell);
                 break;
             default:
         }

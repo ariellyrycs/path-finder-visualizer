@@ -5,9 +5,8 @@ let bfs = ((matrixOptions, {delay, geneareFourDirectionalCoordinates}) => {
         this.route = indexRoute;
     }
 
-    let search = async (startCoords, endCoords) => {
+    let search = async (startCoords, endCoords, included) => {
         let levels = [[new LevelNode(startCoords, '0')]],
-            included = new Set([startCoords.toString()]),
             levelIndex = 0;
         while(levelIndex < levels.length) {
             let currentLevel = levels[levelIndex];
@@ -46,8 +45,11 @@ let bfs = ((matrixOptions, {delay, geneareFourDirectionalCoordinates}) => {
         }
     };
 
-    let start = async (start, end) => {
-        let levels = await search(start, end);
+    let start = async (start, end, walls) => {
+        let levels = await search(start, end, new Set([
+            start.toString(),
+            ...walls.map(i => i.toString())
+        ]));
         await drawPath(levels);
     };
 

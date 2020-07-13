@@ -25,9 +25,12 @@ let dfs = ((matrixOptions, {delay, geneareFourDirectionalCoordinates}) => {
         }
     };
 
-    let start = async (start, end) => {
+    let start = async (start, end, walls) => {
         let path = [start];
-        await search(start, end, path, new Set([start.toString()]));
+        await search(start, end, path, new Set([
+            start.toString(),
+            ...walls.map(i => i.toString())
+        ]));
         drawPath(path);
     };
     
